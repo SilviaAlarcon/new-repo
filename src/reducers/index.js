@@ -32,8 +32,10 @@ const reducer = (state, action) => {
     case 'GET_VIDEO_SOURCE':
       return {
         ...state,
+        //Hace una busqueda por id y hace una igualdad estricta 
+        //Number transforma el string en numero, para coincidir con el id
         playing: state.trends.find(item => item.id === Number(action.payload)) ||
-          state.originals.find(item => item.id === Number(action.payload)) || {}
+          state.originals.find(item => item.id === Number(action.payload)) || {} //retorna un arreglo vacío si no hay un elememto con ese id
       }
     //default manda el estado siempre como lo encontramos 
     default:
