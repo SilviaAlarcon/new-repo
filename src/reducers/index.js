@@ -6,6 +6,14 @@ const reducer = (state, action) => {
         ...state,
         myList: [...state.myList, action.payload] //payload es el objeto que vamos a guardar en esta nueva lista
       }
+    case 'DELETE_FAVORITE':
+      return {
+        ...state,
+        //Tomamos los Items(estado inicial), y lo transformamos para crear un nuevo arreglo con la condición de que tenga desigualdad, para saber si tenemos o no el item que estamos buscando
+        //En caso de que no lo tenga, regresa un arreglo con el elemento que está cumpliendo la condición
+        //O sea, cuales están en favoritos(myList) xD 
+        myList: state.myList.filter(items => items.id !== action.payload)
+      }
     //default manda el estado siempre como lo encontramos 
     default:
       return state;
