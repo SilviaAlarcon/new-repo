@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
+import { connect } from 'react-redux';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
-import Footer from '../components/Footer';
 import useInitialState from '../hooks/useInitialState';
 import '../assets/styles/App.scss';
 
-const API = 'http://localhost:3000/initalState'
-
-const Home = () => {
-  const initialState = useInitialState(API);
-  return initialState.length === 0 ? <h1>Loading...</h1> : (
+const Home = ({ myList, trends, originals }) => {
+  return (
     <>
       <Search />
-      {initialState.mylist.length > 0 &&
+      {/* myList.length ¿?  */}
+      {myList > 0 && (
         <Categories title="Mi Lista">
           <Carousel>
-            {initialState.mylist.map(item =>
-              <CarouselItem key={item.id} {...item} />
-            )}
+            {myList.map(item => <CarouselItem key={item.id} {...item} />)}
           </Carousel>
         </Categories>
-      }
+      )}
       <Categories title="Tendencias">
         <Carousel>
-          {initialState.trends.map(item =>
+          {trends.map(item =>
             <CarouselItem key={item.id} {...item} />
           )}
         </Carousel>
       </Categories>
       <Categories title="Originales de Platzi Video">
         <Carousel>
-          {initialState.originals.map(item =>
+          {originals.map(item =>
             <CarouselItem key={item.id} {...item} />
           )}
         </Carousel>
@@ -42,4 +37,20 @@ const Home = () => {
   );
 }
 
-export default Home;
+// función que nos trae del estado los elementos
+//No es necesario traer todos los elementos, solo los que se necesitan
+
+const mapStateToProps = (state) => {
+  return {
+    myList: state.mylist,
+    trends: state.trends,
+    originals: state.originals,
+  };
+};
+
+//envía dos parámetros principales, el mapeo de nuestros props y los elementos que vamos a disparar(actions), después solo conectamos Home
+
+export default connect(mapStateToProps, null)(Home);
+
+//mapStateToProps= vamos a pasar lo que tenemos dentro del estado a propiedades que va a utilizar el documento
+//null= Segundo elemento que nos va a permitir mapear las acciones que vamos a ejecutar
