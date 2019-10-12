@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import gravatar from '../utils/gravatar';
+import { logoutRequest } from '../actions';
 import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-platzi-video-BW2.png';
 import userIcon from '../assets/static/user-icon.png';
@@ -10,6 +11,11 @@ const Header = props => {
   const { user } = props;
   //validación para saber si tenemos o no un usuario
   const hasUser = Object.keys(user).length > 0; //para saber si un objeto tiene elementos, lo que hacemos es pasarlo por object.keys
+
+  const handleLogout = () => {
+    props.logoutRequest({}) //Con un objeto vacío reinicia el estado, con lo cual ya no habría un usuario
+  }
+
   return (
     <header className="header">
       <Link to='/'>
@@ -22,16 +28,23 @@ const Header = props => {
             <img src={gravatar(user.email)} alt={user.email} /> :
             <img src={userIcon} alt="" />
           }
-
           <p>Perfil</p>
         </div>
         <ul>
-          <li><a href="/">Cuenta</a></li>
-          <li>
-            <Link to='/login'>
-              Iniciar Sesión
-            </Link>
-          </li>
+
+          {hasUser ? //si tenemos un usuario muestra está sección 
+            <li><a href="/">{user.name}</a></li>
+            : null
+          }
+          {hasUser ?
+            <li><a href='#logout' onClick={handleLogout}>Cerrar Sesión</a></li>
+            :
+            <li>
+              <Link to='/login'>
+                Iniciar Sesión
+             </Link>
+            </li>
+          }
         </ul>
       </div>
     </header>
@@ -44,4 +57,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = {
+  logoutRequest,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
