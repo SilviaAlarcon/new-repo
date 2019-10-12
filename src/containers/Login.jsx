@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { loginRequest } from '../actions';
 import '../assets/styles/components/Login.scss';
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
 
-const Login = () => {
+const Login = props => {
   //La constate trae dos valores, uno es todo el formulario y el otro permite guardar los valores obtenidos 
   const [form, setValues] = useState({
     email: '',
@@ -23,7 +25,10 @@ const Login = () => {
   const handleSubmit = event => {
     //Para evitar que el formato que tiene HTML para manejar eventos dentro de un formulario se cumpla(cuando das click en un boton manda los parametros por url y puede crear conflictos )
     event.preventDefault();
-    console.log(form);
+    //Envia el form hacia el estado 
+    props.loginRequest(form);
+    //Nos permite movernos hacia donde sea necesario segun el compartamiento en la app(Estoy es de react router-> BrowserRouter)
+    props.history.push('/')
   }
 
   return (
@@ -69,6 +74,10 @@ const Login = () => {
     </section>
 
   );
-};
+}
 
-export default Login; 
+const mapDispatchToProps = {
+  loginRequest,
+}
+
+export default connect(null, mapDispatchToProps)(Login); 

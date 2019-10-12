@@ -14,6 +14,11 @@ const reducer = (state, action) => {
         //O sea, cuales están en favoritos(myList) xD 
         myList: state.myList.filter(items => items.id !== action.payload)
       }
+    case 'LOGIN_REQUEST':
+      return {
+        ...state,
+        user: action.payload, //le transmite a user el objeto que está creando en action 
+      }
     //default manda el estado siempre como lo encontramos 
     default:
       return state;
