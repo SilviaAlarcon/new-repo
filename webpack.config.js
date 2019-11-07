@@ -1,33 +1,58 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
+  mode: 'development',  //le indicamos a webpack en qué entorno estamos trabajando 
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    path: '/',
+    filename: 'assets/app.js',
     publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx']
+  },
+  optimization: {
+    /*minimizer: isProd ? [
+      new TerserPlugin(),
+    ] : [],*/
+    splitChunks: {
+      chunks: 'async',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          name: 'vendors',
+          chunks: 'all',
+          reuseExistingChunk: true,
+          priority: 1,
+          filename: /*isProd ? 'assets/vendor-[hash].js' : */'assets/vendor.js',
+          enforce: true,
+          test(module, chunks) {
+            const name = module.nameForCondition && module.nameForCondition();
+            return chunks.some(chunks => chunks.name !== 'vendor' && /[\\/]node_modules[\\/]/.test(name));
+          },
+        },
+      },
+    },
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        enforce: 'pre',
         use: {
-          loader: "babel-loader"
-        }
+          loader: "eslint-loader",
+        },
       },
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader'
-          }
-        ]
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.(s*)css$/,
@@ -36,8 +61,17 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
           },
           'css-loader',
-          'sass-loader'
-        ]
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              //recibe dos parametros, el nombre de un directorio y la ruta a la que queremos acceder
+              data: `@import "${path.resolve(__dirname, 'src/assets/styles/Vars.scss')}";  
+              @import "${path.resolve(__dirname, 'src/assets/styles/Media.scss')}";
+              @import "${path.resolve(__dirname, 'src/assets/styles/Base.scss')}";`
+            }
+          }
+        ],
       },
       {
         test: /\.(png|gif|jpg)$/,
@@ -56,12 +90,16 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: './public/index.html',
-      filename: './index.html'
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          autoprefixer(),
+        ],
+      },
     }),
     new MiniCssExtractPlugin({
-      filename: 'assets/[name].css'
+      filename: 'assets/app.css',
     }),
   ]
 };

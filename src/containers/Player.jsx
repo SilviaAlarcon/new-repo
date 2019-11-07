@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import NotFound from '../containers/NotFound';
+import NotFound from './NotFound';
 import { getVideoSource } from '../actions';
 import '../assets/styles/components/Player.scss';
 

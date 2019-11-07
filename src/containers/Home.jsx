@@ -5,12 +5,11 @@ import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
 import useInitialState from '../hooks/useInitialState';
-import '../assets/styles/App.scss';
 
 const Home = ({ myList, trends, originals }) => {
   return (
     <>
-      <Search />
+      <Search isHome />
       {myList.length > 0 &&
         <Categories title="Mi Lista">
           <Carousel>
