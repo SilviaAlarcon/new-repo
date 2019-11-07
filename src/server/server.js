@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
-// import main from './routes/main';
+import main from './routes/main';
 // import helmet from 'helmet';
 
 dotenv.config();
@@ -35,22 +35,7 @@ if (ENV === 'development') {
 //   app.disable('x-powered-by');
 // }
 
-app.get('*', (req, res) => {
-  res.send(`
-  <!DOCTYPE html>
-<html>
-  <head>
-    <title>Platzi Video</title>
-    <Link rel='stylesheet' href='assets/app.css' type='text/css'></Link>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script src='assets/app.js' type='text/javascript'></script>
-    <script src='assets/vendor.js' type='text/javascript'></script>
-  </body>
-</html>
-  `);
-});
+app.get('*', main);
 
 app.listen(PORT, (err) => {
   if (err) console.log(err);
