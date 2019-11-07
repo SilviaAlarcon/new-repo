@@ -25,7 +25,7 @@ const main = (req, res, next) => {
         </StaticRouter>
       </Provider>,
     );
-    //const preloadedState = store.getState();
+    const preloadedState = store.getState(); //nos da el estado que tenemos de nuestro store
     res.send(render(html, preloadedState)); //para enviarlo/mostrarlo al HTML 
   } catch (err) {
     next(err);
