@@ -4,6 +4,8 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 const TerserPlugin = require('terser-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+//const ManifestPlugin = require('webpack-manifest-plugin');
 
 dotenv.config();
 
@@ -11,7 +13,7 @@ const isProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-source-map',
-  entry: './src/frontend/index.js',
+  entry: './src/index.js',
   mode: process.env.NODE_ENV,
   output: {
     path: isProd ?
@@ -109,5 +111,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'assets/app.css',
     }),
+    isProd ? new CompressionPlugin({
+      test: /\.js$|\.css$/, //expresión regular que nos dice que tipo de archivos va a buscar para comprimir 
+      filename: '[path].gz',
+    }) : false, /*() => { },
+    isProd ? new ManifestPlugin() : () => { },*/
   ]
 };
