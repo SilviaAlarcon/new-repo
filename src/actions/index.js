@@ -10,13 +10,13 @@ export const deleteFavorite = payload => ({
   payload,
 });
 
-//Para manejar la información de nuestro login 
+//Para manejar la información de nuestro login
 export const loginRequest = payload => ({
   type: 'LOGIN_REQUEST',
   payload,
 });
 
-//Cerrar sesión 
+//Cerrar sesión */
 export const logoutRequest = payload => ({
   type: 'LOGOUT_REQUEST',
   payload,

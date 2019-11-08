@@ -7,18 +7,18 @@ import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-platzi-video-BW2.png';
 import userIcon from '../assets/static/user-icon.png';
 
-const Header = props => {
+const Header = (props) => {
   const { user } = props;
   //validación para saber si tenemos o no un usuario
   const hasUser = Object.keys(user).length > 0; //para saber si un objeto tiene elementos, lo que hacemos es pasarlo por object.keys
 
   const handleLogout = () => {
-    props.logoutRequest({}) //Con un objeto vacío reinicia el estado, con lo cual ya no habría un usuario
-  }
+    props.logoutRequest({}); //Con un objeto vacío reinicia el estado, con lo cual ya no habría un usuario*/
+  };
 
   return (
     <header className="header">
-      <Link to='/'>
+      <Link to="/">
         <img className="header__img" src={logo} alt="Platzi Video" />
       </Link>
       <div className="header__menu">
@@ -32,33 +32,33 @@ const Header = props => {
         </div>
         <ul>
 
-          {hasUser ? //si tenemos un usuario muestra está sección 
-            <li><a href="/">{user.name}</a></li>
-            : null
+          {hasUser ? //si tenemos un usuario muestra está sección
+            <li><a href="/">{user.name}</a></li> : null
           }
           {hasUser ?
-            <li><a href='#logout' onClick={handleLogout}>Cerrar Sesión</a></li>
-            :
-            <li>
-              <Link to='/login'>
-                Iniciar Sesión
-             </Link>
-            </li>
+            <li><a href="#logout" onClick={handleLogout}>Cerrar Sesión</a></li> :
+            (
+              <li>
+                <Link to="/login">
+                  Iniciar Sesión
+                </Link>
+              </li>
+            )
           }
         </ul>
       </div>
     </header>
   );
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = {
   logoutRequest,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

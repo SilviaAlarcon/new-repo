@@ -12,13 +12,11 @@ const CarouselItem = (props) => {
   const { id, cover, title, year, contentRating, duration, isList } = props;
   //Función que maneja el guardado hacia nuestros favoritos
   const handleSetFavorite = () => {
-    props.setFavorite({
-      id, cover, title, year, contentRating, duration
-    })
-  }
+    props.setFavorite({ id, cover, title, year, contentRating, duration });
+  };
   const handleDeleteFavorite = (itemId) => {
-    props.deleteFavorite(itemId)
-  }
+    props.deleteFavorite(itemId);
+  };
   return (
     <div className="carousel-item">
       <img className="carousel-item__img" src={cover} alt={title} />
@@ -31,19 +29,22 @@ const CarouselItem = (props) => {
               alt="Play Icon"
             />
           </Link>
-          {
-            isList ?
-              <img className="carousel-item__details--img"
-                src={removeIcon}
-                alt="Remove Icon"
-                onClick={() => handleDeleteFavorite(id)}
-              /> :
-              <img className="carousel-item__details--img"
+          {isList ? (
+            <img
+              className="carousel-item__details--img"
+              src={removeIcon}
+              alt="Plus Icon"
+              onClick={() => handleDeleteFavorite(id)}
+            />
+          ) :
+            (
+              <img
+                className="carousel-item__details--img"
                 src={plusIcon}
                 alt="Plus Icon"
                 onClick={handleSetFavorite}
               />
-          }
+            )}
         </div>
         <p className="carousel-item__details--title">{title}</p>
         <p className="carousel-item__details--subtitle">
@@ -51,7 +52,7 @@ const CarouselItem = (props) => {
         </p>
       </div>
     </div>
-  )
+  );
 };
 
 CarouselItem.propTypes = {
@@ -60,12 +61,12 @@ CarouselItem.propTypes = {
   year: PropTypes.number,
   contentRating: PropTypes.string,
   duration: PropTypes.number,
-}
+};
 
 const mapDispatchToProps = {
-  //recibe una función que es el action 
+  //recibe una función que es el action
   setFavorite,
   deleteFavorite,
-}
+};
 
 export default connect(null, mapDispatchToProps)(CarouselItem);

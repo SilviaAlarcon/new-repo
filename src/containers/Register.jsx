@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerRequest } from '../actions';
-import { Link } from 'react-router-dom';
 import '../assets/styles/components/Register.scss';
 
-const Register = props => {
+const Register = (props) => {
   const [form, setValues] = useState({
     email: '',
     name: '',
     password: '',
   });
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     setValues({
       ...form,
-      [event.target.name]: event.target.value
-    })
-  }
+      [event.target.name]: event.target.value,
+    });
+  };
 
   //El registro exitoso lleva a home
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     props.registerRequest(form);
     props.history.push('/');
-  }
+  };
 
   return (
     <section className="register">
@@ -47,23 +47,25 @@ const Register = props => {
           <input
             name="password"
             className="input"
-            type='password'
-            placeholder='Contraseña'
+            type="password"
+            placeholder="Contraseña"
             onChange={handleInput}
           />
-          <button className='button'>Registrarme</button>
+          <button className="button" type="button">
+            Registrarme
+          </button>
         </form>
-        <Link to='/login'>
+        <Link to="/login">
           Iniciar sesión
         </Link>
       </section>
     </section>
 
   );
-}
+};
 
 const mapDispatchToProps = {
   registerRequest,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Register);

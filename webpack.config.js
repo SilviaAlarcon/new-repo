@@ -25,7 +25,7 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   optimization: {
-    minimizer: isProd ? [  //si es producción minificar y agregar estos paquetes de optimización, si no, array vacío
+    minimizer: isProd ? [ //si es producción minificar y agregar estos paquetes de optimización, si no, array vacío*/
       new TerserPlugin(),
     ] : [],
     splitChunks: {
@@ -54,14 +54,14 @@ module.exports = {
         exclude: /node_modules/,
         enforce: 'pre',
         use: {
-          loader: "eslint-loader",
+          loader: 'eslint-loader',
         },
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
@@ -78,9 +78,9 @@ module.exports = {
               //recibe dos parametros, el nombre de un directorio y la ruta a la que queremos acceder
               data: `@import "${path.resolve(__dirname, 'src/assets/styles/Vars.scss')}";  
               @import "${path.resolve(__dirname, 'src/assets/styles/Media.scss')}";
-              @import "${path.resolve(__dirname, 'src/assets/styles/Base.scss')}";`
-            }
-          }
+              @import "${path.resolve(__dirname, 'src/assets/styles/Base.scss')}";`,
+            },
+          },
         ],
       },
       {
@@ -116,5 +116,5 @@ module.exports = {
       filename: '[path].gz',
     }) : false, /*() => { },
     isProd ? new ManifestPlugin() : () => { },*/
-  ]
+  ],
 };

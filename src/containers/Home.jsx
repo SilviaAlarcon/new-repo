@@ -9,41 +9,38 @@ const Home = ({ myList, trends, originals }) => {
   return (
     <>
       <Search isHome />
-      {myList.length > 0 &&
+      {myList.length > 0 && (
         <Categories title="Mi Lista">
           <Carousel>
-            {myList.map(item =>
+            {myList.map(item => (
               <CarouselItem
                 key={item.id}
                 {...item}
                 isList
               />
-            )}
+            ))}
           </Carousel>
         </Categories>
-      }
+      )}
       <Categories title="Tendencias">
         <Carousel>
-          {trends.map(item =>
-            <CarouselItem key={item.id} {...item} />
-          )}
+          {trends.map(item => <CarouselItem key={item.id} {...item} />)}
         </Carousel>
       </Categories>
       <Categories title="Originales de Platzi Video">
         <Carousel>
-          {originals.map(item =>
-            <CarouselItem key={item.id} {...item} />
-          )}
+          {originals.map(item => <CarouselItem key={item.id} {...item} />)
+          }
         </Carousel>
       </Categories>
     </>
   );
-}
+};
 
 // función que nos trae del estado los elementos
 //No es necesario traer todos los elementos, solo los que se necesitan
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     myList: state.myList,
     trends: state.trends,

@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
 import main from './routes/main';
-import helmet from 'helmet'; //seguridad 
+import helmet from 'helmet'; //seguridad */
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-app.use(express.static(`${__dirname}/public`)); //definir qué carpeta publica va a usar nuestro servidor 
+app.use(express.static(`${__dirname}/public`)); //definir qué carpeta publica va a usar nuestro servidor */
 
 if (ENV === 'development') {
   console.log('Loading dev config');

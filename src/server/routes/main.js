@@ -15,8 +15,8 @@ const main = (req, res, next) => {
     const store = createStore(reducer, initialState);
     const html = renderToString(
       <Provider store={store}>
-        <StaticRouter //recibe dos propiedades, location y context 
-          location={req.url} //para saber exactamente en dónde estás parado 
+        <StaticRouter //recibe dos propiedades, location y context */
+          location={req.url} //para saber exactamente en dónde estás parado */
           context={{}}
         >
           <Layout>
@@ -26,7 +26,7 @@ const main = (req, res, next) => {
       </Provider>,
     );
     const preloadedState = store.getState(); //nos da el estado que tenemos de nuestro store
-    res.send(render(html, preloadedState)); //para enviarlo/mostrarlo al HTML 
+    res.send(render(html, preloadedState)); //para enviarlo/mostrarlo al HTML */
   } catch (err) {
     next(err);
   }
