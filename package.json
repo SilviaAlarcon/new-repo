@@ -20,7 +20,7 @@
     "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
     "eslint-loader": "^3.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.21.2",
     "history": "^4.10.1",
     "ignore-styles": "^5.0.1",
